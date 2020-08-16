@@ -1,5 +1,11 @@
-export const es = {
-    greeting: '¡Hola {name}! ¿Cómo estás?',
-    time: 'La hora es {t, time, short}.',
-    date: 'La fecha es {d, date}.',
-};
+import { toPlainObject } from '../util/to-plain-object';
+
+export const es = toPlainObject({
+    navbar: {
+        home: 'Inicio',
+        about: 'Acerca',
+        services: 'Servicios',
+        projects: 'Proyectos',
+        contact: 'Contacto',
+    },
+});

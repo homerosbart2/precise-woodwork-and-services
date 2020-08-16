@@ -1,56 +1,81 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import { Component1 } from './components/component-1';
 import { IntlProvider } from 'react-intl';
 import { en } from './lang/en';
 import { es } from './lang/es';
+import { Navbar } from './components/navbar';
+import { ROUTE } from './types/route';
+import { Button } from './components/button';
+import { ImageStore } from './stores/image-store';
+import { Loader } from './components/loader';
+import { Image } from './types/image';
 
 require('./App.scss');
-
-interface AppProps {
-    text: string;
-}
-
-interface AppState {
-    color: string;
-}
 
 const messages = {
     en,
     es,
 };
 
-export class App extends Component<AppProps, AppState> {
-    locale: 'en' | 'es' = 'en';
+interface AppState {
+    fetching: boolean;
+    previewedImage?: Image;
+}
 
-    constructor(props: AppProps) {
+export class App extends Component<{}, AppState> {
+    locale: 'en' | 'es' = 'en';
+    imageStore = new ImageStore();
+
+    constructor(props: {}) {
         super(props);
 
         this.state = {
-            color: '#00FF00',
+            fetching: true,
         };
     }
 
-    handleChangeColorButtonClick = () => {
-        this.setState(state => ({
-            color: state.color === '#00FF00' ? '#FF0000' : '#00FF00',
-        }));
+    componentDidMount() {
+        this.imageStore.fetchImages().then(_ => {
+            this.setState({
+                fetching: false,
+                previewedImage: this.imageStore.images[0],
+            });
+        });
     }
 
     render() {
         return (
             <IntlProvider locale={this.locale} messages={messages[this.locale]}>
-                <div className="App">
-                    <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <p className="App-text">
-                            { this.props.text }
-                        </p>
-                        <Component1 color={this.state.color}/>
-                        <div onClick={this.handleChangeColorButtonClick} className="change-color-button">
-                            Change color
+                <div className="app">
+                    <Navbar route={ROUTE.HOME} onActionClick={() => { debugger; }}/>
+                    <div className="home">
+                        <div className="home-title">
+                            <div className="home-title-secondary">
+                                {/* TODO: translate */}
+                                Hello, we are
+                            </div>
+                            <div className="home-title-primary">
+                                Precise Woodwork and Services
+                            </div>
                         </div>
-                    </header>
+                        <div className="home-gallery-preview">
+                            {this.state.previewedImage && (
+                                <img src={this.state.previewedImage.src} alt="previewed"/>
+                            )}
+                            <Loader shown={this.state.fetching}/>
+                        </div>
+                        <div className="home-presentation-card">
+                            <div className="home-presentation-card-container">
+                                <div className="home-presentation-card-container-title">
+                                    Lorem ipsum dolor
+                                </div>
+                                <div className="home-presentation-card-container-description">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis mattis orci, in suscipit nisi euismod ac.
+                                </div>
+                                {/* TODO: translate */}
+                                <Button text="Our services" onClick={() => { debugger; }}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </IntlProvider>
         );

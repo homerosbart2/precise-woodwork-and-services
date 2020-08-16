@@ -1,41 +1,74 @@
-.App {
-    text-align: center;
+@import './components/navbar/variables';
 
-    .App-header {
-        background-color: #282c34;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-        color: white;
+.app {
+    height: 100%;
 
-        .App-logo {
-            height: 40vmin;
-            pointer-events: none;
+    .home {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        grid-template-rows: 2fr 3fr;
+        width: 100%;
+        height: calc(100% - #{$navbarHeight + 1px});
 
-            @media (prefers-reduced-motion: no-preference) {
-                animation: App-logo-spin infinite 20s linear;
+        .home-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            grid-column: span 2;
+
+            .home-title-secondary {
+                font-weight: bold;
+                margin-bottom: 8px;
+                font-size: 18px;
+            }
+
+            .home-title-primary {
+                font-size: 48px;
+                font-weight: 200;
             }
         }
 
-        .change-color-button {
-            cursor: pointer;
-            font-size: 18px;
-            padding: 4px 8px;
-            background: pink;
-            color: black;
+        .home-gallery-preview {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-300);
+            color: white;
+
+            .loader {
+                position: absolute;
+            }
         }
-    }
-}
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
+        .home-presentation-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-50);
 
-    to {
-        transform: rotate(360deg);
+            .home-presentation-card-container {
+                display: flex;
+                flex-direction: column;
+                width: calc(100% - 120px);
+
+                .home-presentation-card-container-title {
+                    font-weight: bold;
+                    font-size: 24px;
+                    margin-bottom: 24px;
+                }
+
+                .home-presentation-card-container-description {
+                    margin-bottom: 24px;
+                    font-size: 16px;
+                    text-align: justify;
+                }
+
+                .button {
+                    margin-left: auto;
+                }
+            }
+        }
     }
 }
