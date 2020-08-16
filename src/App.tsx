@@ -59,7 +59,10 @@ export class App extends Component<{}, AppState> {
                         </div>
                         <div className="home-gallery-preview">
                             {this.state.previewedImage && (
-                                <img src={this.state.previewedImage.src} alt="previewed"/>
+                                <>
+                                    <img className="home-gallery-preview-image-background" style={{ backgroundImage: `url(${this.state.previewedImage.src})` }} alt=""/>
+                                    <img className="home-gallery-preview-image" src={this.state.previewedImage.src} alt=""/>
+                                </>
                             )}
                             <Loader shown={this.state.fetching}/>
                         </div>
