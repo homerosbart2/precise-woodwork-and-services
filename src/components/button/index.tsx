@@ -3,7 +3,7 @@ import React from "react";
 require('./button.scss');
 
 interface ButtonProps {
-    text: string;
+    text:  JSX.Element | string;
     onClick(): void;
 }
 

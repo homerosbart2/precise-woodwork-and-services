@@ -4,10 +4,13 @@ import { en } from './lang/en';
 import { es } from './lang/es';
 import { Navbar } from './components/navbar';
 import { ROUTE } from './types/route';
-import { Button } from './components/button';
 import { ImageStore } from './stores/image-store';
-import { Loader } from './components/loader';
-import { Image } from './types/image';
+import { RouteCarousel } from './components/route-carousel';
+import { RouteCarouselHorse } from './components/route-carousel/route-carousel-horse';
+import { Locale } from './types/locale';
+import { ServicesRoute } from './components/services-route';
+import { HomeRoute } from './components/home-route';
+import { ContactRoute } from './components/contact-route';
 
 require('./App.scss');
 
@@ -16,20 +19,26 @@ const messages = {
     es,
 };
 
+const LOCAL_STORAGE_LOCALE_KEY = 'locale';
+
 interface AppState {
     fetching: boolean;
-    previewedImage?: Image;
+    route: ROUTE;
+    locale: Locale;
 }
 
 export class App extends Component<{}, AppState> {
-    locale: 'en' | 'es' = 'en';
     imageStore = new ImageStore();
 
     constructor(props: {}) {
         super(props);
 
+        const storedLocale = localStorage.getItem(LOCAL_STORAGE_LOCALE_KEY) as Locale | null;
+
         this.state = {
             fetching: true,
+            route: ROUTE.CONTACT,
+            locale: storedLocale ? storedLocale : 'en',
         };
     }
 
@@ -37,48 +46,46 @@ export class App extends Component<{}, AppState> {
         this.imageStore.fetchImages().then(_ => {
             this.setState({
                 fetching: false,
-                previewedImage: this.imageStore.images[0],
             });
         });
     }
 
+    handleNavbarActionClick = (route: ROUTE) => {
+        this.setState({ route });
+    }
+
+    handleLocaleChange = (locale: Locale) => {
+        localStorage.setItem(LOCAL_STORAGE_LOCALE_KEY, locale);
+        this.setState({ locale });
+    }
+
+    handleGoToServicesRoute = () => {
+        this.setState({ route: ROUTE.SERVICES });
+    }
+
+    handleGoToContactRoute = () => {
+        this.setState({ route: ROUTE.CONTACT });
+    }
+
     render() {
         return (
-            <IntlProvider locale={this.locale} messages={messages[this.locale]}>
+            <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
                 <div className="app">
-                    <Navbar route={ROUTE.HOME} onActionClick={() => { debugger; }}/>
-                    <div className="home">
-                        <div className="home-title">
-                            <div className="home-title-secondary">
-                                {/* TODO: translate */}
-                                Hello, we are
-                            </div>
-                            <div className="home-title-primary">
-                                Precise Woodwork and Services
-                            </div>
-                        </div>
-                        <div className="home-gallery-preview">
-                            {this.state.previewedImage && (
-                                <>
-                                    <img className="home-gallery-preview-image-background" style={{ backgroundImage: `url(${this.state.previewedImage.src})` }} alt=""/>
-                                    <img className="home-gallery-preview-image" src={this.state.previewedImage.src} alt=""/>
-                                </>
-                            )}
-                            <Loader shown={this.state.fetching}/>
-                        </div>
-                        <div className="home-presentation-card">
-                            <div className="home-presentation-card-container">
-                                <div className="home-presentation-card-container-title">
-                                    Lorem ipsum dolor
-                                </div>
-                                <div className="home-presentation-card-container-description">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis mattis orci, in suscipit nisi euismod ac.
-                                </div>
-                                {/* TODO: translate */}
-                                <Button text="Our services" onClick={() => { debugger; }}/>
-                            </div>
-                        </div>
-                    </div>
+                    <Navbar locale={this.state.locale} route={this.state.route} onActionClick={this.handleNavbarActionClick} onLocaleChange={this.handleLocaleChange}/>
+                    <RouteCarousel route={this.state.route}>
+                        {translateX => [
+                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.HOME}`} route={ROUTE.HOME} translateX={translateX} >
+                                <HomeRoute onGoToServicesRoute={this.handleGoToServicesRoute}/>
+                            </RouteCarouselHorse>,
+                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.ABOUT}`} route={ROUTE.ABOUT} translateX={translateX}>ABOUT</RouteCarouselHorse>,
+                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.SERVICES}`} route={ROUTE.SERVICES} translateX={translateX}>
+                                <ServicesRoute onGoToContactRoute={this.handleGoToContactRoute}/>
+                            </RouteCarouselHorse>,
+                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.PROJECTS}`} route={ROUTE.PROJECTS} translateX={translateX}>PROJECTS</RouteCarouselHorse>,
+                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.CONTACT}`} route={ROUTE.CONTACT} translateX={translateX}><ContactRoute/></RouteCarouselHorse>,
+                        ]}
+                        
+                    </RouteCarousel>
                 </div>
             </IntlProvider>
         );

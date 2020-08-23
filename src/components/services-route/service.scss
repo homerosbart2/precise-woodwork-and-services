@@ -1,0 +1,26 @@
+.services-service {
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+
+    .services-service-title {
+        font-size: 38px;
+        font-weight: 200;
+        margin-bottom: 24px;
+    }
+
+    .services-service-list {
+        .services-service-list-element {
+            padding: 0 4px;
+
+            & + .services-service-list-element {
+                margin-top: 8px;
+            }
+        }
+    }
+
+    .button {
+        margin-top: auto;
+        align-self: flex-end;
+    }
+}
