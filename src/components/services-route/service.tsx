@@ -4,9 +4,9 @@ import { Button } from '../button';
 require('./service.scss');
 
 interface ServiceProps {
-    title: JSX.Element | string;
+    title: JSX.Element;
     buttonText: JSX.Element | string;
-    listElements:  (JSX.Element | string)[];
+    listElements:  JSX.Element[];
     onButtonClick(): void;
 }
 

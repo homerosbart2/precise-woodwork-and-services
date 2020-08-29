@@ -5,12 +5,102 @@
     width: 100%;
     height: 100%;
 
+    .contact-left {
+        .contact-left-form {
+            $padding: 48px;
+
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - #{$padding * 2});
+            height: calc(100% - #{$padding * 2});
+            padding: 48px;
+            
+            .contact-left-form-title {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 24px;
+            }
+
+            .contact-left-form-input {
+                .contact-left-form-input-label {
+                    font-weight: 200;
+                    font-size: 16px;
+                    margin-bottom: 12px;
+                }
+
+                .contact-left-form-input-container {
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    .contact-left-form-input-container-option {
+                        cursor: pointer;
+                        display: flex;
+                        padding: 10px 24px;
+                        border: 1px solid var(--gray-300);
+                        width: max-content;
+                        margin-bottom: 12px;
+                        margin-right: 12px;
+                        transition: 0.2s ease;
+
+                        &:hover,
+                        &.selected {
+                            background: var(--gray-300);
+                            color: white;
+                        }
+                    }
+
+                    input[type=text] {
+                        display: flex;
+                        height: 36px;
+                        width: 100%;
+                        border: 1px solid var(--gray-300);
+                        outline: 0;
+                        padding: 0 12px;
+                    }
+
+                    textarea {
+                        height: 178px;
+                        width: 100%;
+                        height: 112px;
+                        resize: none;
+                        border: 1px solid var(--gray-300);
+                        padding: 12px;
+                        outline: 0;
+                        font-family: inherit;
+                    }
+                }
+
+                & + .contact-left-form-input {
+                    margin-top: 16px;
+                }
+            }
+
+            .contact-left-form-button {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 16px;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.2s ease;
+
+                &.shown {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+
     .contact-right {
+        overflow: hidden;
+
         img {
             background-size: cover;
             background-position: center;
-            width: 100%;
-            height: 100%;
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+            margin-left: -1px;
+            margin-top: -1px;
         }
     }
 }

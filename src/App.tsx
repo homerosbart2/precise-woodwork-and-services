@@ -11,6 +11,7 @@ import { Locale } from './types/locale';
 import { ServicesRoute } from './components/services-route';
 import { HomeRoute } from './components/home-route';
 import { ContactRoute } from './components/contact-route';
+import { SERVICE } from './types/service';
 
 require('./App.scss');
 
@@ -25,10 +26,12 @@ interface AppState {
     fetching: boolean;
     route: ROUTE;
     locale: Locale;
+    selectedService?: SERVICE;
 }
 
 export class App extends Component<{}, AppState> {
     imageStore = new ImageStore();
+    addSelectedService?: (service: SERVICE) => void;
 
     constructor(props: {}) {
         super(props);
@@ -63,7 +66,10 @@ export class App extends Component<{}, AppState> {
         this.setState({ route: ROUTE.SERVICES });
     }
 
-    handleGoToContactRoute = () => {
+    handleGoToContactRoute = (service: SERVICE) => {
+        if (this.addSelectedService) {
+            this.addSelectedService(service);
+        }
         this.setState({ route: ROUTE.CONTACT });
     }
 
@@ -82,7 +88,14 @@ export class App extends Component<{}, AppState> {
                                 <ServicesRoute onGoToContactRoute={this.handleGoToContactRoute}/>
                             </RouteCarouselHorse>,
                             <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.PROJECTS}`} route={ROUTE.PROJECTS} translateX={translateX}>PROJECTS</RouteCarouselHorse>,
-                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.CONTACT}`} route={ROUTE.CONTACT} translateX={translateX}><ContactRoute/></RouteCarouselHorse>,
+                        <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.CONTACT}`} route={ROUTE.CONTACT} translateX={translateX}>
+                            <ContactRoute>
+                                {addSelectedService => {
+                                    this.addSelectedService = addSelectedService;
+                                    return <></>;
+                                }}
+                            </ContactRoute>
+                        </RouteCarouselHorse>,
                         ]}
                         
                     </RouteCarousel>

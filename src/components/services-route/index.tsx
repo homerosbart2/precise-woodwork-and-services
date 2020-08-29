@@ -1,12 +1,22 @@
 import React from 'react';
 import { ImagePreviewer } from '../image-previewer';
 import { Service } from './service';
+import { FormattedMessage } from 'react-intl';
+import { CARPENTRY_SERVICE, INSTALLATION_SERVICE, SERVICE } from '../../types/service';
 
 interface ServicesRouteProps {
-    onGoToContactRoute(): void;
+    onGoToContactRoute(service: SERVICE): void;
 }
 
 export function ServicesRoute(props: ServicesRouteProps) {
+    const handleBuildButtonClick = () => {
+        props.onGoToContactRoute(CARPENTRY_SERVICE.KITCHEN_CABINETS);
+    }
+
+    const handleInstallButtonClick = () => {
+        props.onGoToContactRoute(INSTALLATION_SERVICE.ARTWORK);
+    }
+
     return (
         <div className="services">
             <div className="services-image-previewer">
@@ -14,28 +24,20 @@ export function ServicesRoute(props: ServicesRouteProps) {
             </div>
             {/* TODO: translate */}
             <Service
-                title="Build Your Furniture"
+                title={<FormattedMessage id="services.carpentry.title"/>}
                 buttonText="Build"
-                listElements={[
-                    'Kitchen Cabinets',
-                    'Closets',
-                    'Vanities',
-                    'Trim (Baseboard, Casing, Crown Molding, etc)',
-                    'Interior and Exterior Door Installation',
-                    'Mantels',
-                    'Stairs',
-                ]}
-                onButtonClick={props.onGoToContactRoute}
+                listElements={Object.values(CARPENTRY_SERVICE).map(service => (
+                    <FormattedMessage key={`carpentry-service-${service}`} id={`services.carpentry.${service}`}/>
+                ))}
+                onButtonClick={handleBuildButtonClick}
             />
             <Service
-                title="Install Decorations"
+                title={<FormattedMessage id="services.picture_and_artwork_installation.title"/>}
                 buttonText="Install"
-                listElements={[
-                    'Picture and Artwork Installation',
-                    'Curtains and Blinds Installation',
-                    'TV Mount Installation',
-                ]}
-                onButtonClick={props.onGoToContactRoute}
+                listElements={Object.values(INSTALLATION_SERVICE).map(service => (
+                    <FormattedMessage key={`instalattion-service-${service}`} id={`services.picture_and_artwork_installation.${service}`}/>
+                ))}
+                onButtonClick={handleInstallButtonClick}
             />
         </div>
     );
