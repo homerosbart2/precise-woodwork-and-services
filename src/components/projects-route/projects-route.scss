@@ -1,0 +1,45 @@
+.projects {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: auto;
+    padding: 48px;
+
+    .projects-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 282px);
+        column-gap: 12px;
+        row-gap: 12px;
+        justify-items: center;
+        justify-content: center;
+        width: 100%;
+        height: max-content;
+
+        .projects-gallery-item {
+            position: relative;
+            height: 282px;
+
+            img {
+                cursor: pointer;
+                width: 282px;
+            }
+
+            .projects-gallery-item-number {
+                position: absolute;
+                z-index: 1;
+                top: 4px;
+                right: 4px;
+                background: var(--gray-300);
+                color: white;
+                font-size: 12px;
+                padding: 2px 4px;
+            }
+        }
+    }
+
+    .loader {
+        position: absolute;
+        align-self: center;
+    }
+}

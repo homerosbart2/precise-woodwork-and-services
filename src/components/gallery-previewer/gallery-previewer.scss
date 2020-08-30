@@ -1,0 +1,46 @@
+.gallery-previewer {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.2s ease;
+
+    .image-previewer {
+        width: 100%;
+    }
+
+    .gallery-previewer-description {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--gray-300);
+        color: white;
+        padding: 48px;
+
+        div {
+            text-align: justify;
+        }
+    }
+
+    .gallery-previewer-close-button {
+        cursor: pointer;
+        position: absolute;
+        color: white;
+        top: 48px;
+        right: 48px;
+        font-size: 36px;
+        line-height: 0.5;
+    }
+
+    &.shown {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+    }
+}

@@ -12,6 +12,9 @@ import { ServicesRoute } from './components/services-route';
 import { HomeRoute } from './components/home-route';
 import { ContactRoute } from './components/contact-route';
 import { SERVICE } from './types/service';
+import { ProjectsRoute } from './components/projects-route';
+import { GalleryPreviewer } from './components/gallery-previewer';
+import { Image } from './types/image';
 
 require('./App.scss');
 
@@ -27,6 +30,7 @@ interface AppState {
     route: ROUTE;
     locale: Locale;
     selectedService?: SERVICE;
+    previewedImage?: Image;
 }
 
 export class App extends Component<{}, AppState> {
@@ -40,7 +44,7 @@ export class App extends Component<{}, AppState> {
 
         this.state = {
             fetching: true,
-            route: ROUTE.CONTACT,
+            route: ROUTE.PROJECTS,
             locale: storedLocale ? storedLocale : 'en',
         };
     }
@@ -73,6 +77,14 @@ export class App extends Component<{}, AppState> {
         this.setState({ route: ROUTE.CONTACT });
     }
 
+    handleGalleryPreviewerClose = () => {
+        this.setState({ previewedImage: undefined });
+    }
+
+    handleProjectsRouteImageClick = (image: Image) => {
+        this.setState({ previewedImage: image });
+    }
+
     render() {
         return (
             <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
@@ -80,25 +92,59 @@ export class App extends Component<{}, AppState> {
                     <Navbar locale={this.state.locale} route={this.state.route} onActionClick={this.handleNavbarActionClick} onLocaleChange={this.handleLocaleChange}/>
                     <RouteCarousel route={this.state.route}>
                         {translateX => [
-                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.HOME}`} route={ROUTE.HOME} translateX={translateX} >
+                            <RouteCarouselHorse
+                                key={`route-carousel-horse-${ROUTE.HOME}`}
+                                route={ROUTE.HOME}
+                                translateX={translateX}
+                            >
                                 <HomeRoute onGoToServicesRoute={this.handleGoToServicesRoute}/>
                             </RouteCarouselHorse>,
-                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.ABOUT}`} route={ROUTE.ABOUT} translateX={translateX}>ABOUT</RouteCarouselHorse>,
-                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.SERVICES}`} route={ROUTE.SERVICES} translateX={translateX}>
+                            <RouteCarouselHorse
+                                key={`route-carousel-horse-${ROUTE.ABOUT}`}
+                                route={ROUTE.ABOUT}
+                                translateX={translateX}
+                            >
+                                ABOUT
+                            </RouteCarouselHorse>,
+                            <RouteCarouselHorse
+                                key={`route-carousel-horse-${ROUTE.SERVICES}`}
+                                route={ROUTE.SERVICES}
+                                translateX={translateX}
+                            >
                                 <ServicesRoute onGoToContactRoute={this.handleGoToContactRoute}/>
                             </RouteCarouselHorse>,
-                            <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.PROJECTS}`} route={ROUTE.PROJECTS} translateX={translateX}>PROJECTS</RouteCarouselHorse>,
-                        <RouteCarouselHorse key={`route-carousel-horse-${ROUTE.CONTACT}`} route={ROUTE.CONTACT} translateX={translateX}>
-                            <ContactRoute>
-                                {addSelectedService => {
-                                    this.addSelectedService = addSelectedService;
-                                    return <></>;
-                                }}
-                            </ContactRoute>
-                        </RouteCarouselHorse>,
+                            <RouteCarouselHorse
+                                key={`route-carousel-horse-${ROUTE.PROJECTS}`}
+                                route={ROUTE.PROJECTS}
+                                translateX={translateX}
+                            >
+                                <ProjectsRoute
+                                    imageStore={this.imageStore}
+                                    fetching={this.state.fetching}
+                                    onImageClick={this.handleProjectsRouteImageClick}
+                                />
+                            </RouteCarouselHorse>,
+                            <RouteCarouselHorse
+                                key={`route-carousel-horse-${ROUTE.CONTACT}`}
+                                route={ROUTE.CONTACT}
+                                translateX={translateX}
+                            >
+                                <ContactRoute>
+                                    {addSelectedService => {
+                                        this.addSelectedService = addSelectedService;
+                                        return <></>;
+                                    }}
+                                </ContactRoute>
+                            </RouteCarouselHorse>,
                         ]}
                         
                     </RouteCarousel>
+                    {this.state.previewedImage && (
+                        <GalleryPreviewer
+                            image={this.state.previewedImage}
+                            onClose={this.handleGalleryPreviewerClose}
+                        />
+                    )}
                 </div>
             </IntlProvider>
         );

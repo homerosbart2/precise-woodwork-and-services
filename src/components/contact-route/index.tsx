@@ -94,7 +94,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
             },
             'Service request: ',
         );
-        const body = this.state.formDescription;
+        const body = encodeURI(`${this.state.formDescription}${this.state.formNumber ?  `\n\nPhone number: ${this.state.formNumber}` : ''}`);
         window.open(`mailto:${mail}?subject=${subject}&body=${body}`);
     }
 
@@ -185,7 +185,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                     </div>
                 </div>
                 <div className="contact-right">
-                    <img style={{ backgroundImage: 'url(/contact/contact.jpg)' }} alt=""/>
+                    <img style={{ backgroundImage: 'url(/contact/contact1.jpg)' }} alt=""/>
                 </div>
                 {this.props.children(this.addSelectedService)}
             </div>

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 require('./image-previewer.scss');
 
 interface ImagePreviewerProps {
-    imagesName: string;
-    length: number;
+    src: string;
+    length?: number;
 }
 
 interface ImagePreviewerState {
@@ -28,14 +28,16 @@ export class ImagePreviewer extends Component<ImagePreviewerProps, ImagePreviewe
     }
 
     componentDidMount() {
-        this.intervalId = window.setInterval(
-            () => {
-                this.setState(state => ({
-                    previewedSecondaryImageIndex: (state.previewedSecondaryImageIndex + 1) % this.props.length
-                }));
-            },
-            5000,
-        );
+        if (this.props.length) {
+            this.intervalId = window.setInterval(
+                () => {
+                    this.setState(state => ({
+                        previewedSecondaryImageIndex: (state.previewedSecondaryImageIndex + 1) % this.props.length!
+                    }));
+                },
+                5000,
+            );
+        }
     }
 
     componentDidUpdate(prevProps: ImagePreviewerProps, prevState: ImagePreviewerState) {
@@ -63,10 +65,13 @@ export class ImagePreviewer extends Component<ImagePreviewerProps, ImagePreviewe
     }
 
     renderImage = (previewedImageIndex: number,) => {
+        const imageSrc = this.props.length
+            ? `/${this.props.src}/${this.props.src}-${previewedImageIndex}.jpg`
+            : this.props.src;
         return (
             <>
-                <img className="image-previewer-image-background" style={{ backgroundImage: `url(/${this.props.imagesName}/${this.props.imagesName}-${previewedImageIndex}.jpg)` }} alt=""/>
-                <img className="image-previewer-image-main" src={`/${this.props.imagesName}/${this.props.imagesName}-${previewedImageIndex}.jpg`} alt=""/>
+                <img className="image-previewer-image-background" style={{ backgroundImage: `url(${imageSrc})` }} alt=""/>
+                <img className="image-previewer-image-main" src={imageSrc} alt=""/>
             </>
         );
     }
