@@ -4,7 +4,10 @@ import { Service } from './service';
 import { FormattedMessage } from 'react-intl';
 import { CARPENTRY_SERVICE, INSTALLATION_SERVICE, SERVICE } from '../../types/service';
 
+require('./services-route.scss');
+
 interface ServicesRouteProps {
+    shown: boolean;
     onGoToContactRoute(service: SERVICE): void;
 }
 
@@ -20,7 +23,7 @@ export function ServicesRoute(props: ServicesRouteProps) {
     return (
         <div className="services">
             <div className="services-image-previewer">
-                <ImagePreviewer src="service-image" length={3}/>
+                <ImagePreviewer src="service-image" length={3} shown={props.shown}/>
             </div>
             {/* TODO: translate */}
             <Service

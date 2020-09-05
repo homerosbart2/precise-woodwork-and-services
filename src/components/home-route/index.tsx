@@ -1,8 +1,12 @@
 import React from 'react';
 import { ImagePreviewer } from '../image-previewer';
 import { Button } from '../button';
+import { FormattedMessage } from 'react-intl';
+
+require('./home-route.scss');
 
 interface HomeRouteProps {
+    shown: boolean;
     onGoToServicesRoute(): void;
 }
 
@@ -11,26 +15,24 @@ export function HomeRoute(props: HomeRouteProps) {
         <div className="home">
             <div className="home-title">
                 <div className="home-title-secondary">
-                    {/* TODO: translate */}
-                    Hello, we are
+                    <FormattedMessage id="home.hello_we_are"/>
                 </div>
                 <div className="home-title-primary">
                     Precise Woodwork and Services
                 </div>
             </div>
             <div className="home-gallery-preview">
-                <ImagePreviewer src="home-image" length={3}/>
+                <ImagePreviewer src="home-image" length={3} shown={props.shown}/>
             </div>
             <div className="home-presentation-card">
                 <div className="home-presentation-card-container">
                     <div className="home-presentation-card-container-title">
-                        Lorem ipsum dolor
+                        <FormattedMessage id="home.presentation_card.title"/>
                     </div>
                     <div className="home-presentation-card-container-description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis mattis orci, in suscipit nisi euismod ac.
+                        <FormattedMessage id="home.presentation_card.description"/>
                     </div>
-                    {/* TODO: translate */}
-                    <Button text="Our services" onClick={props.onGoToServicesRoute}/>
+                    <Button text={<FormattedMessage id="home.our_services"/>} onClick={props.onGoToServicesRoute}/>
                 </div>
             </div>
         </div>

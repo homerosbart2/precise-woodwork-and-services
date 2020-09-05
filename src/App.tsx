@@ -15,6 +15,8 @@ import { SERVICE } from './types/service';
 import { ProjectsRoute } from './components/projects-route';
 import { GalleryPreviewer } from './components/gallery-previewer';
 import { Image } from './types/image';
+import { AboutRoute } from './components/about-route';
+import { FontAwesomeLibrary } from './util/font-awesome-library';
 
 require('./App.scss');
 
@@ -40,11 +42,13 @@ export class App extends Component<{}, AppState> {
     constructor(props: {}) {
         super(props);
 
+        FontAwesomeLibrary.initializeFontAwesomeLibrary();
+
         const storedLocale = localStorage.getItem(LOCAL_STORAGE_LOCALE_KEY) as Locale | null;
 
         this.state = {
             fetching: true,
-            route: ROUTE.PROJECTS,
+            route: ROUTE.ABOUT,
             locale: storedLocale ? storedLocale : 'en',
         };
     }
@@ -89,7 +93,12 @@ export class App extends Component<{}, AppState> {
         return (
             <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
                 <div className="app">
-                    <Navbar locale={this.state.locale} route={this.state.route} onActionClick={this.handleNavbarActionClick} onLocaleChange={this.handleLocaleChange}/>
+                    <Navbar
+                        locale={this.state.locale}
+                        route={this.state.route}
+                        onActionClick={this.handleNavbarActionClick}
+                        onLocaleChange={this.handleLocaleChange}
+                    />
                     <RouteCarousel route={this.state.route}>
                         {translateX => [
                             <RouteCarouselHorse
@@ -97,21 +106,27 @@ export class App extends Component<{}, AppState> {
                                 route={ROUTE.HOME}
                                 translateX={translateX}
                             >
-                                <HomeRoute onGoToServicesRoute={this.handleGoToServicesRoute}/>
+                                <HomeRoute
+                                    onGoToServicesRoute={this.handleGoToServicesRoute}
+                                    shown={this.state.route === ROUTE.HOME}
+                                />
                             </RouteCarouselHorse>,
                             <RouteCarouselHorse
                                 key={`route-carousel-horse-${ROUTE.ABOUT}`}
                                 route={ROUTE.ABOUT}
                                 translateX={translateX}
                             >
-                                ABOUT
+                                <AboutRoute/>
                             </RouteCarouselHorse>,
                             <RouteCarouselHorse
                                 key={`route-carousel-horse-${ROUTE.SERVICES}`}
                                 route={ROUTE.SERVICES}
                                 translateX={translateX}
                             >
-                                <ServicesRoute onGoToContactRoute={this.handleGoToContactRoute}/>
+                                <ServicesRoute
+                                    onGoToContactRoute={this.handleGoToContactRoute}
+                                    shown={this.state.route === ROUTE.SERVICES}
+                                />
                             </RouteCarouselHorse>,
                             <RouteCarouselHorse
                                 key={`route-carousel-horse-${ROUTE.PROJECTS}`}

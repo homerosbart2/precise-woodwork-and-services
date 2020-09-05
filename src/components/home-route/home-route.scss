@@ -1,0 +1,87 @@
+@import "../../styles/media-queries";
+
+.home {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 2fr 3fr;
+    width: 100%;
+    height: 100%;
+
+    @include cellphone {
+        grid-template-rows: 1fr 2fr 2fr;
+    }
+
+    .home-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        grid-column: span 2;
+
+        .home-title-secondary {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 18px;
+
+            @include cellphone {
+                font-size: 14px;
+            }
+        }
+
+        .home-title-primary {
+            font-size: 48px;
+            font-weight: 200;
+
+            @include cellphone {
+                font-size: 22px;
+            }
+        }
+    }
+
+    .home-gallery-preview {
+        @include cellphone {
+            grid-column: span 2;
+        }
+    }
+
+    .home-presentation-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gray-50);
+
+        @include cellphone {
+            grid-column: span 2;
+        }
+
+        .home-presentation-card-container {
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 120px);
+
+            .home-presentation-card-container-title {
+                font-weight: bold;
+                font-size: 24px;
+                margin-bottom: 24px;
+
+                @include cellphone {
+                    font-size: 18px;
+                }
+            }
+
+            .home-presentation-card-container-description {
+                margin-bottom: 24px;
+                font-size: 16px;
+                text-align: justify;
+
+                @include cellphone {
+                    font-size: inherit;
+                }
+            }
+
+            .button {
+                margin-left: auto;
+            }
+        }
+    }
+}

@@ -12,7 +12,12 @@ export const en = toPlainObject({
         contact: 'Contact',
     },
     home: {
-
+        hello_we_are: 'Hello, we are',
+        presentation_card: {
+            title: 'Lorem ipsum dolor',
+            description: 'Our focus is our client and their needs, to offer a great service and value, not speeding through the job and getting it done.',
+        },
+        our_services: 'Our services',
     },
     about: {
 
@@ -28,7 +33,7 @@ export const en = toPlainObject({
             [CARPENTRY_SERVICE.STAIRS]: 'Stairs',
         },
         picture_and_artwork_installation: {
-            title: 'Picture and Artwork Installation',
+            title: 'Installation',
             [INSTALLATION_SERVICE.ARTWORK]: 'Picture and Artwork Installation',
             [INSTALLATION_SERVICE.CURTAINS]: 'Curtains and Blinds Installation',
         },
@@ -38,6 +43,21 @@ export const en = toPlainObject({
 
     },
     contact: {
-
+        title: 'Let\'s Create Together ',
+        carpentry_services: 'Carpentry Services',
+        installation_services: 'Installation Services',
+        name: {
+            label: 'Name',
+            placeholder: 'E.g. John Wick',
+        },
+        phone_number: {
+            label: 'Phone Number',
+            placeholder: 'E.g. +1 (202) 843-8938',
+        },
+        description: {
+            label: 'Description',
+            placeholder: 'Please detail your request.',
+        },
+        submit: 'Submit',
     },
 });

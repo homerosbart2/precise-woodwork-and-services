@@ -1,0 +1,13 @@
+$cellphoneBreakpoint: 840px;
+
+@mixin maxWidth($width) {
+    @media only screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin cellphone() {
+    @include maxWidth($cellphoneBreakpoint) {
+        @content;
+    }
+}

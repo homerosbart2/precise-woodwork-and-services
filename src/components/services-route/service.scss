@@ -1,12 +1,22 @@
+@import "../../styles/media-queries";
+
 .services-service {
     padding: 48px;
     display: flex;
     flex-direction: column;
 
+    @include cellphone {
+        padding: 24px;
+    }
+
     .services-service-title {
         font-size: 38px;
         font-weight: 200;
         margin-bottom: 24px;
+
+        @include cellphone {
+            font-size: 22px;
+        }
     }
 
     .services-service-list {
@@ -22,5 +32,10 @@
     .button {
         margin-top: auto;
         align-self: flex-end;
+
+        @include maxWidth(400px) {
+            width: calc(100% - 96px);
+            justify-content: center;
+        }
     }
 }

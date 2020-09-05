@@ -54,7 +54,7 @@ export class GalleryPreviewer extends Component<GalleryPreviewerProps, GalleryPr
     render() {
         return (
             <div className={`gallery-previewer ${this.state.shown ? 'shown' : ''}`}>
-                <ImagePreviewer src={this.props.image.src}/>
+                <ImagePreviewer src={this.props.image.src} shown={true}/>
                 <div className="gallery-previewer-description">
                     {this.props.image.description.split(/(?:\r\n|\r|\n)/g).map((sentence, index) => (
                         <div key={`gallery-previewer-description-${index}`}>{sentence}</div>

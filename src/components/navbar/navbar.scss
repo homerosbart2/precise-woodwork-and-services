@@ -1,6 +1,9 @@
 @import './variables';
+@import '../../styles/media-queries';
 
 .navbar {
+    $navbarBreakpoint: 1044px;
+
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--gray-50);
@@ -13,15 +16,39 @@
         align-items: center;
         margin-left: 48px;
 
+        @include cellphone {
+            margin-left: 24px;
+        }
+
         iframe {
             height: 120px;
             width: 120px;
             border: 0;
+
+            @include cellphone {
+                width: 90px;
+                height: 90px;
+            }
         }
     }
 
     .navbar-actions {
         display: flex;
+        transition: 0.2s ease;
+
+        @include maxWidth($navbarBreakpoint) {
+            position: fixed;
+            top: $navbarHeight + 1px;
+            left: 0;
+            height: calc(100vh - #{$navbarHeight + 1px});
+            width: 100vw;
+            background: white;
+            z-index: 1;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+        }
 
         .navbar-action,
         .navbar-language-button {
@@ -31,6 +58,11 @@
             margin-bottom: -1px;
             padding: 0 48px;
             font-weight: 500;
+
+            @include maxWidth($navbarBreakpoint) {
+                height: $navbarHeight + 1px;
+                justify-content: center;
+            }
         }
 
         .navbar-action {
@@ -52,9 +84,37 @@
             text-transform: uppercase;
             border-left: 1px solid var(--gray-50);
 
+            @include maxWidth($navbarBreakpoint) {
+                border-top: 1px solid var(--gray-50);
+            }
+
             img {
                 height: 20px;
                 margin-left: 4px;
+            }
+        }
+    }
+
+    .navbar-menu {
+        padding: 0 48px;
+        align-items: center;
+        display: none;
+
+        @include maxWidth($navbarBreakpoint) {
+            display: flex;
+        }
+
+        @include cellphone {
+            padding: 0 24px;
+        }
+    }
+
+
+    @include maxWidth($navbarBreakpoint) {
+        &.opened {
+            .navbar-actions {
+                opacity: 1;
+                visibility: visible;
             }
         }
     }

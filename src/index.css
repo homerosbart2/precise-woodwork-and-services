@@ -7,6 +7,10 @@
     --gray-300: rgb(32, 33, 36);
 }
 
+html {
+    overflow: hidden;
+}
+
 body {
     height: 100vh;
     margin: 0;

@@ -4,6 +4,7 @@ require('./image-previewer.scss');
 
 interface ImagePreviewerProps {
     src: string;
+    shown: boolean;
     length?: number;
 }
 
@@ -28,15 +29,8 @@ export class ImagePreviewer extends Component<ImagePreviewerProps, ImagePreviewe
     }
 
     componentDidMount() {
-        if (this.props.length) {
-            this.intervalId = window.setInterval(
-                () => {
-                    this.setState(state => ({
-                        previewedSecondaryImageIndex: (state.previewedSecondaryImageIndex + 1) % this.props.length!
-                    }));
-                },
-                5000,
-            );
+        if (this.props.shown) {
+            this.setInterval();
         }
     }
 
@@ -57,11 +51,32 @@ export class ImagePreviewer extends Component<ImagePreviewerProps, ImagePreviewe
                 }
             );
         }
+
+        if (prevProps.shown !== this.props.shown) {
+            if (this.props.shown) {
+                this.setInterval();
+            } else {
+                window.clearInterval(this.intervalId);
+            }
+        }
     }
 
     componentWillUnmount() {
         window.clearInterval(this.intervalId);
         window.clearTimeout(this.timeoutId);
+    }
+
+    setInterval = () => {
+        if (this.props.length) {
+            this.intervalId = window.setInterval(
+                () => {
+                    this.setState(state => ({
+                        previewedSecondaryImageIndex: (state.previewedSecondaryImageIndex + 1) % this.props.length!
+                    }));
+                },
+                5000,
+            );
+        }
     }
 
     renderImage = (previewedImageIndex: number,) => {

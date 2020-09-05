@@ -87,6 +87,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
     }
 
     handleFormSubmit = () => {
+        // TODO: translate
         const mail = 'info@pwoodwork.com';
         const subject = this.state.selectedServices.reduce(
             (newSubject: string, service, index) => {
@@ -113,11 +114,11 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                 <div className="contact-left">
                     <div className="contact-left-form">
                         <div className="contact-left-form-title">
-                            Let's create together 
+                            <FormattedMessage id="contact.title"/>
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
-                                Carpentry Services
+                                <FormattedMessage id="contact.carpentry_services"/>
                             </div>
                             <div className="contact-left-form-input-container">
                                 {Object.values(CARPENTRY_SERVICE).map(service => (
@@ -133,7 +134,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
-                                Installation Services
+                                <FormattedMessage id="contact.installation_services"/>
                             </div>
                             <div className="contact-left-form-input-container">
                                 {Object.values(INSTALLATION_SERVICE).map(service => (
@@ -149,12 +150,12 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label">
-                                Name *
+                                <FormattedMessage id="contact.name.label"/> *
                             </div>
                             <div className="contact-left-form-input-container">
                                 <input
                                     type="text"
-                                    placeholder="eg. John Wick"
+                                    placeholder={this.props.intl.messages['contact.name.placeholder'] as string}
                                     value={this.state.formName}
                                     onChange={this.handleFormNameChange}
                                 />
@@ -162,12 +163,12 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label">
-                                Phone Number
+                                <FormattedMessage id="contact.phone_number.label"/>
                             </div>
                             <div className="contact-left-form-input-container">
                                 <input
                                     type="text"
-                                    placeholder="eg. +1 (202) 843-8938"
+                                    placeholder={this.props.intl.messages['contact.phone_number.placeholder'] as string}
                                     value={this.state.formNumber}
                                     onChange={this.handleFormNumberChange}
                                 />
@@ -175,18 +176,18 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label">
-                                Description *
+                                <FormattedMessage id="contact.description.label"/> *
                             </div>
                             <div className="contact-left-form-input-container">
                                 <textarea
-                                    placeholder="Please detail your request."
+                                    placeholder={this.props.intl.messages['contact.description.placeholder'] as string}
                                     value={this.state.formDescription}
                                     onChange={this.handleFormDescriptionChange}
                                 />
                             </div>
                         </div>
                         <div className={`contact-left-form-button ${this.shouldShowSubmitButton(this.state) ? 'shown' : ''}`}>
-                            <Button text="Submit" onClick={this.handleFormSubmit}/>
+                            <Button text={<FormattedMessage id="contact.submit"/>} onClick={this.handleFormSubmit}/>
                         </div>
                     </div>
                     <div className="contact-left-social-networks">
