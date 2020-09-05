@@ -48,7 +48,7 @@ export class App extends Component<{}, AppState> {
 
         this.state = {
             fetching: true,
-            route: ROUTE.ABOUT,
+            route: ROUTE.HOME,
             locale: storedLocale ? storedLocale : 'en',
         };
     }

@@ -71,20 +71,28 @@
                     }
 
                     input[type=text] {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
                         display: flex;
                         height: 36px;
                         width: 100%;
                         border: 1px solid var(--gray-300);
+                        border-radius: 0;
                         outline: 0;
                         padding: 0 12px;
                     }
 
                     textarea {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
                         height: 178px;
                         width: 100%;
                         height: 112px;
                         resize: none;
                         border: 1px solid var(--gray-300);
+                        border-radius: 0;
                         padding: 12px;
                         outline: 0;
                         font-family: inherit;

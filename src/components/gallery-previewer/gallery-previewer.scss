@@ -1,3 +1,5 @@
+@import "../../styles/media-queries";
+
 .gallery-previewer {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -11,6 +13,11 @@
     pointer-events: none;
     transition: 0.2s ease;
 
+    @include cellphone {
+        grid-template-rows: 3fr 2fr;
+        grid-template-columns: 1fr;
+    }
+
     .image-previewer {
         width: 100%;
     }
@@ -22,6 +29,12 @@
         background: var(--gray-300);
         color: white;
         padding: 48px;
+
+        @include cellphone {
+            padding: 24px;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
 
         div {
             text-align: justify;
@@ -36,6 +49,11 @@
         right: 48px;
         font-size: 36px;
         line-height: 0.5;
+
+        @include cellphone {
+            top: 24px;
+            right: 24px;
+        }
     }
 
     &.shown {
