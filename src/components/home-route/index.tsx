@@ -22,7 +22,7 @@ export function HomeRoute(props: HomeRouteProps) {
                 </div>
             </div>
             <div className="home-gallery-preview">
-                <ImagePreviewer src="home-image" length={3} shown={props.shown}/>
+                <ImagePreviewer src="home-image" length={9} shown={props.shown}/>
             </div>
             <div className="home-presentation-card">
                 <div className="home-presentation-card-container">

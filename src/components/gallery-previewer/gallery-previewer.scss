@@ -12,6 +12,7 @@
     visibility: hidden;
     pointer-events: none;
     transition: 0.2s ease;
+    height: 100vh;
 
     @include cellphone {
         grid-template-rows: 3fr 2fr;

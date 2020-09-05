@@ -59,5 +59,9 @@ export const en = toPlainObject({
             placeholder: 'Please detail your request.',
         },
         submit: 'Submit',
+        email: {
+            service_request: 'Service request',
+            phone_number: 'Phone number',
+        },
     },
 });

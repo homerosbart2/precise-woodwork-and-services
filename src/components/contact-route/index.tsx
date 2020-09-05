@@ -102,10 +102,10 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                     return `${newSubject} ${this.props.intl.messages[useFallbackAnd ? 'and_2' : 'and_1']} ${translatedService}`;
                 }
             },
-            'Service request: ',
+            `${this.props.intl.messages['contact.email.service_request']}: `,
         );
-        const body = encodeURI(`${this.state.formDescription}${this.state.formNumber ?  `\n\nPhone number: ${this.state.formNumber}` : ''}`);
-        window.open(`mailto:${mail}?subject=${subject}&body=${body}`);
+        const body = encodeURI(`${this.state.formDescription}${this.state.formNumber ?  `\n\n${this.props.intl.messages['contact.email.phone_number']}: ${this.state.formNumber}` : ''}`);
+        window.open(`mailto:${mail}?subject=${subject}&body=${body.replace('+', '%2B')}`);
     }
 
     render() {
@@ -195,7 +195,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                     </div>
                 </div>
                 <div className="contact-right">
-                    <img style={{ backgroundImage: 'url(/contact/contact1.jpg)' }} alt=""/>
+                    <img style={{ backgroundImage: 'url(/contact/contact3.gif)' }} alt=""/>
                 </div>
                 {this.props.children(this.addSelectedService)}
             </div>

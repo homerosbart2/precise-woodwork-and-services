@@ -39,9 +39,6 @@ export const es = toPlainObject({
         },
         
     },
-    projects: {
-
-    },
     contact: {
         title: 'Construyamos juntos',
         carpentry_services: 'Servicios de carpintería',
@@ -59,5 +56,9 @@ export const es = toPlainObject({
             placeholder: 'Por favor detalle su solicitud.',
         },
         submit: 'Enviar',
+        email: {
+            service_request: 'Solicitud de servicio',
+            phone_number: 'Número de teléfono',
+        },
     },
 });
