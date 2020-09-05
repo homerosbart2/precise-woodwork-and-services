@@ -33,6 +33,15 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
         };
     }
 
+    componentDidUpdate(prevProps: ContactRouteProps, prevState: ContactRouteState) {
+        if (!this.shouldShowSubmitButton(prevState) && this.shouldShowSubmitButton(this.state)) {
+            const formElement = document.querySelector<HTMLDivElement>('.contact-left-form');
+            if (formElement) {
+                formElement.scrollIntoView({ block: 'end' });
+            }
+        }
+    }
+
     handleServiceOptionClick = (service: SERVICE) => {
         this.setState(state => ({
             selectedServices: state.selectedServices.includes(service)
@@ -65,11 +74,11 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
         this.setState({ formDescription: event.currentTarget.value });
     }
 
-    shouldShowSubmitButton = () => {
+    shouldShowSubmitButton = (state: ContactRouteState) => {
         return (
-            this.state.selectedServices.length > 0
-            && Boolean(this.state.formName)
-            && Boolean(this.state.formDescription)
+            state.selectedServices.length > 0
+            && Boolean(state.formName)
+            && Boolean(state.formDescription)
         );
     }
 
@@ -107,7 +116,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                             Let's create together 
                         </div>
                         <div className="contact-left-form-input">
-                            <div className="contact-left-form-input-label">
+                            <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
                                 Carpentry Services
                             </div>
                             <div className="contact-left-form-input-container">
@@ -123,7 +132,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                             </div>
                         </div>
                         <div className="contact-left-form-input">
-                            <div className="contact-left-form-input-label">
+                            <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
                                 Installation Services
                             </div>
                             <div className="contact-left-form-input-container">
@@ -176,7 +185,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                                 />
                             </div>
                         </div>
-                        <div className={`contact-left-form-button ${this.shouldShowSubmitButton() ? 'shown' : ''}`}>
+                        <div className={`contact-left-form-button ${this.shouldShowSubmitButton(this.state) ? 'shown' : ''}`}>
                             <Button text="Submit" onClick={this.handleFormSubmit}/>
                         </div>
                     </div>
