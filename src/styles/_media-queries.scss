@@ -11,3 +11,9 @@ $cellphoneBreakpoint: 840px;
         @content;
     }
 }
+
+@mixin notTouchscreen() {
+    @media (hover: hover) and (pointer: fine) {
+        @content;
+    }
+}

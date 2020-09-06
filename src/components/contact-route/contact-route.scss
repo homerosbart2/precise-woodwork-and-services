@@ -63,7 +63,13 @@
                         margin-right: 12px;
                         transition: 0.2s ease;
 
-                        &:hover,
+                        @include notTouchscreen{
+                            &:hover {
+                                background: var(--gray-300);
+                                color: white;
+                            }
+                        }
+
                         &.selected {
                             background: var(--gray-300);
                             color: white;
