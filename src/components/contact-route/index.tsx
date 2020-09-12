@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { SERVICE, CARPENTRY_SERVICE, INSTALLATION_SERVICE } from '../../types/service';
+import { SERVICE } from '../../types/service';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Button } from '../button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 require('./contact-route.scss');
 
@@ -13,15 +14,19 @@ interface ContactRouteProps {
 }
 
 const PHONE_NUMBER_REGEX = /^\+?([0-9]*-*\(*\)*[\s]*)*$/g;
+const PHONE_NUMBER = '+1 (713) 4785-880';
 
 interface ContactRouteState {
     selectedServices: SERVICE[];
     formName: string;
     formNumber: string;
     formDescription: string;
+    showCopyMessage: boolean;
 }
 
 class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
+    copyMessageTimeoutId?: number;
+
     constructor(props: ContactRouteProps) {
         super(props);
 
@@ -30,6 +35,7 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
             formName: '',
             formNumber: '',
             formDescription: '',
+            showCopyMessage: false,
         };
     }
 
@@ -40,6 +46,10 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                 formElement.scrollIntoView({ block: 'end' });
             }
         }
+    }
+
+    componentWillUnmount() {
+        window.clearTimeout(this.copyMessageTimeoutId);
     }
 
     handleServiceOptionClick = (service: SERVICE) => {
@@ -82,16 +92,11 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
         );
     }
 
-    isCarpentryService = (service: SERVICE): service is CARPENTRY_SERVICE => {
-        return (Object.values(CARPENTRY_SERVICE) as SERVICE[]).includes(service);
-    }
-
     handleFormSubmit = () => {
-        // TODO: translate
         const mail = 'info@pwoodwork.com';
         const subject = this.state.selectedServices.reduce(
             (newSubject: string, service, index) => {
-                const translatedService = (this.isCarpentryService(service) ? this.props.intl.messages[`services.carpentry.${service}`] : this.props.intl.messages[`services.picture_and_artwork_installation.${service}`]) as string;
+                const translatedService = this.props.intl.messages[`services.${service}`] as string;
                 const useFallbackAnd = translatedService.toUpperCase().startsWith('I');
 
                 if (index === 0) {
@@ -108,6 +113,48 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
         window.open(`mailto:${mail}?subject=${subject}&body=${body.replace('+', '%2B')}`);
     }
 
+    isMobilePhone = () => {
+        const iosUserAgentRegex = /(iPhone|iPad|iPod)/;
+        const androidUserAgentRegex = /Android/;
+
+        return iosUserAgentRegex.test(window.navigator.userAgent) || androidUserAgentRegex.test(window.navigator.userAgent);
+    }
+
+    handleWhatsappClick = () => {
+        if (this.isMobilePhone()) {
+            window.open(`tel:${PHONE_NUMBER}`);
+        } else {
+            const phoneNumberInputElement = document.querySelector<HTMLInputElement>('#phone-number-input');
+            if (phoneNumberInputElement) {
+                phoneNumberInputElement.select();
+                phoneNumberInputElement.setSelectionRange(0, PHONE_NUMBER.length);
+                document.execCommand("copy");
+    
+                if (!this.state.showCopyMessage) {
+                    this.setState(
+                        { showCopyMessage: true },
+                        () => {
+                            window.setTimeout(
+                                () => {
+                                    this.setState({ showCopyMessage: false });
+                                },
+                                3000,
+                            );
+                        },
+                    );
+                }
+            }
+        }
+    }
+
+    handleInstagramClick = () => {
+        window.open('https://www.instagram.com/precise_woodwork_and_services/');
+    }
+
+    handleFacebookClick = () => {
+        window.open('https://www.facebook.com/pwoodwks');
+    }
+
     render() {
         return (
             <div className="contact">
@@ -117,40 +164,22 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                             <FormattedMessage id="contact.title"/>
                         </div>
                         <div className="contact-left-form-input">
-                            <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
-                                <FormattedMessage id="contact.carpentry_services"/>
-                            </div>
                             <div className="contact-left-form-input-container">
-                                {Object.values(CARPENTRY_SERVICE).map(service => (
+                                {Object.values(SERVICE).map(service => (
                                     <div
                                         key={`contact-left-form-input-container-option-${service}`}
                                         className={`contact-left-form-input-container-option ${this.state.selectedServices.includes(service) ? 'selected' : ''}`}
                                         onClick={() => this.handleServiceOptionClick(service)}
                                     >
-                                        <FormattedMessage id={`services.carpentry.${service}`}/>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="contact-left-form-input">
-                            <div className="contact-left-form-input-label" style={{ marginBottom: 0 }}>
-                                <FormattedMessage id="contact.installation_services"/>
-                            </div>
-                            <div className="contact-left-form-input-container">
-                                {Object.values(INSTALLATION_SERVICE).map(service => (
-                                    <div
-                                        key={`contact-left-form-input-container-option-${service}`}
-                                        className={`contact-left-form-input-container-option ${this.state.selectedServices.includes(service) ? 'selected' : ''}`}
-                                        onClick={() => this.handleServiceOptionClick(service)}
-                                    >
-                                        <FormattedMessage id={`services.picture_and_artwork_installation.${service}`}/>
+                                        <FormattedMessage id={`services.${service}`}/>
                                     </div>
                                 ))}
                             </div>
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label">
-                                <FormattedMessage id="contact.name.label"/> *
+                                <FormattedMessage id="contact.name.label"/>
+                                <span className="contact-left-form-input-label-required">*</span>
                             </div>
                             <div className="contact-left-form-input-container">
                                 <input
@@ -176,7 +205,8 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                         </div>
                         <div className="contact-left-form-input">
                             <div className="contact-left-form-input-label">
-                                <FormattedMessage id="contact.description.label"/> *
+                                <FormattedMessage id="contact.description.label"/>
+                                <span className="contact-left-form-input-label-required">*</span>
                             </div>
                             <div className="contact-left-form-input-container">
                                 <textarea
@@ -186,7 +216,16 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                                 />
                             </div>
                         </div>
-                        <div className={`contact-left-form-button ${this.shouldShowSubmitButton(this.state) ? 'shown' : ''}`}>
+                        <div className={`contact-left-form-buttons ${this.shouldShowSubmitButton(this.state) ? 'shown' : ''}`}>
+                            <div className="contact-left-form-buttons-social" onClick={this.handleWhatsappClick}>
+                                <FontAwesomeIcon icon={{ prefix: 'fab', iconName: 'whatsapp' }}/>
+                            </div>
+                            <div className="contact-left-form-buttons-social" onClick={this.handleInstagramClick}>
+                                <FontAwesomeIcon icon={{ prefix: 'fab', iconName: 'instagram' }}/>
+                            </div>
+                            <div className="contact-left-form-buttons-social" onClick={this.handleFacebookClick} style={{ fontSize: 22 }}>
+                                <FontAwesomeIcon icon={{ prefix: 'fab', iconName: 'facebook-f' }}/>
+                            </div>
                             <Button text={<FormattedMessage id="contact.submit"/>} onClick={this.handleFormSubmit}/>
                         </div>
                     </div>
@@ -197,7 +236,21 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                 <div className="contact-right">
                     <img style={{ backgroundImage: 'url(/contact/contact3.gif)' }} alt=""/>
                 </div>
+                <div className="contact-copy-message">
+                    <div className={`contact-copy-message-text ${this.state.showCopyMessage ? 'shown' : ''}`}>
+                        Se ha copiado: {PHONE_NUMBER}
+                    </div>
+                </div>
                 {this.props.children(this.addSelectedService)}
+                <input
+                    type="text"
+                    name="phone-number"
+                    id="phone-number-input"
+                    value={PHONE_NUMBER}
+                    readOnly={true}
+                    style={{ position: 'absolute', top: '-100%' }}
+                />
+                {window.navigator.userAgent}
             </div>
         );
     }

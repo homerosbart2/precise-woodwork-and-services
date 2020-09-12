@@ -4,7 +4,6 @@ import { en } from './lang/en';
 import { es } from './lang/es';
 import { Navbar } from './components/navbar';
 import { ROUTE } from './types/route';
-import { ImageStore } from './stores/image-store';
 import { RouteCarousel } from './components/route-carousel';
 import { RouteCarouselHorse } from './components/route-carousel/route-carousel-horse';
 import { Locale } from './types/locale';
@@ -13,8 +12,6 @@ import { HomeRoute } from './components/home-route';
 import { ContactRoute } from './components/contact-route';
 import { SERVICE } from './types/service';
 import { ProjectsRoute } from './components/projects-route';
-import { GalleryPreviewer } from './components/gallery-previewer';
-import { Image } from './types/image';
 import { AboutRoute } from './components/about-route';
 import { FontAwesomeLibrary } from './util/font-awesome-library';
 
@@ -32,11 +29,9 @@ interface AppState {
     route: ROUTE;
     locale: Locale;
     selectedService?: SERVICE;
-    previewedImage?: Image;
 }
 
 export class App extends Component<{}, AppState> {
-    imageStore = new ImageStore();
     addSelectedService?: (service: SERVICE) => void;
 
     constructor(props: {}) {
@@ -51,14 +46,6 @@ export class App extends Component<{}, AppState> {
             route: ROUTE.HOME,
             locale: storedLocale ? storedLocale : 'en',
         };
-    }
-
-    componentDidMount() {
-        this.imageStore.fetchImages().then(_ => {
-            this.setState({
-                fetching: false,
-            });
-        });
     }
 
     handleNavbarActionClick = (route: ROUTE) => {
@@ -79,14 +66,6 @@ export class App extends Component<{}, AppState> {
             this.addSelectedService(service);
         }
         this.setState({ route: ROUTE.CONTACT });
-    }
-
-    handleGalleryPreviewerClose = () => {
-        this.setState({ previewedImage: undefined });
-    }
-
-    handleProjectsRouteImageClick = (image: Image) => {
-        this.setState({ previewedImage: image });
     }
 
     render() {
@@ -133,11 +112,7 @@ export class App extends Component<{}, AppState> {
                                 route={ROUTE.PROJECTS}
                                 translateX={translateX}
                             >
-                                <ProjectsRoute
-                                    imageStore={this.imageStore}
-                                    fetching={this.state.fetching}
-                                    onImageClick={this.handleProjectsRouteImageClick}
-                                />
+                                <ProjectsRoute/>
                             </RouteCarouselHorse>,
                             <RouteCarouselHorse
                                 key={`route-carousel-horse-${ROUTE.CONTACT}`}
@@ -154,12 +129,6 @@ export class App extends Component<{}, AppState> {
                         ]}
                         
                     </RouteCarousel>
-                    {this.state.previewedImage && (
-                        <GalleryPreviewer
-                            image={this.state.previewedImage}
-                            onClose={this.handleGalleryPreviewerClose}
-                        />
-                    )}
                 </div>
             </IntlProvider>
         );

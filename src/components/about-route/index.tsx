@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 require('./about-route.scss');
 
@@ -12,15 +13,15 @@ export function AboutRoute(props: AboutRouteProps) {
             <div className="about-top">
                 <div className="about-top-background" style={{ backgroundImage: 'url(/about/background.jpg)' }}/>
                 <div className="about-top-image">
-                    <img src="/about/profile.png" alt=""/>
+                    <img src="/about/profile.PNG" alt=""/>
                 </div>
             </div>
             <div className="about-bottom">
-                <div className="about-bottom-name">
-                    Byron Cotuc
+                <div className="about-bottom-title">
+                    <FormattedMessage id="about.title"/>
                 </div>
                 <div className="about-bottom-description">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque obcaecati esse atque omnis necessitatibus quis assumenda, dolorem a minus eius quibusdam neque, perferendis porro, vitae molestiae officia in mollitia odit.
+                    <FormattedMessage id="about.description"/>
                 </div>
             </div>
         </div>

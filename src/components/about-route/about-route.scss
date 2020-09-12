@@ -10,7 +10,7 @@
 
         .about-top-background {
             background-size: cover;
-            background-position-y: -90px;
+            background-position-y: center;
             position: absolute;
             top: 0;
             right: 0;
@@ -39,7 +39,7 @@
         align-items: center;
         padding: 112px 48px 48px;
 
-        .about-bottom-name {
+        .about-bottom-title {
             font-size: 36px;
             font-weight: 200;
         }

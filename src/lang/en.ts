@@ -1,5 +1,5 @@
 import { toPlainObject } from '../util/to-plain-object';
-import { CARPENTRY_SERVICE, INSTALLATION_SERVICE } from '../types/service';
+import { SERVICE } from '../types/service';
 
 export const en = toPlainObject({
     and_1: 'and',
@@ -12,40 +12,34 @@ export const en = toPlainObject({
         contact: 'Contact',
     },
     home: {
-        hello_we_are: 'Hello, we are',
+        hello_we_are: 'We are',
         presentation_card: {
-            title: 'Lorem ipsum dolor',
+            title: 'At PWS',
             description: 'Our focus is our client and their needs, to offer a great service and value, not speeding through the job and getting it done.',
         },
         our_services: 'Our services',
     },
     about: {
-
+        title: 'About us',
+        description: 'At Precise Woodwork and services, we are on a mission to delivery you the highest quality product and detailed execution.'
     },
     services: {
-        carpentry: {
-            title: 'Carpentry',
-            [CARPENTRY_SERVICE.KITCHEN_CABINETS]: 'Kitchen Cabinets',
-            [CARPENTRY_SERVICE.CLOSETS]: 'Closets',
-            [CARPENTRY_SERVICE.VANITIES]: 'Vanities',
-            [CARPENTRY_SERVICE.TRIM]: 'Trim (Baseboard, Casing, Crown Molding, etc)',
-            [CARPENTRY_SERVICE.MANTELS]: 'Mantels',
-            [CARPENTRY_SERVICE.STAIRS]: 'Stairs',
-        },
-        picture_and_artwork_installation: {
-            title: 'Installation',
-            [INSTALLATION_SERVICE.ARTWORK]: 'Picture and Artwork Installation',
-            [INSTALLATION_SERVICE.CURTAINS]: 'Curtains and Blinds Installation',
-        },
-        
+        title: 'Carpentry and Installations',
+        [SERVICE.KITCHEN_CABINETS]: 'Kitchen Cabinets',
+        [SERVICE.CLOSETS]: 'Closets',
+        [SERVICE.VANITIES]: 'Vanities',
+        [SERVICE.TRIM]: 'Trim (Baseboard, Casing, Crown Molding, etc)',
+        [SERVICE.MANTELS]: 'Mantels',
+        [SERVICE.STAIRS]: 'Stairs',
+        [SERVICE.ARTWORK]: 'Picture and Artwork Installation',
+        [SERVICE.CURTAINS]: 'Curtains and Blinds Installation',
+        button: 'More info',
     },
     projects: {
 
     },
     contact: {
-        title: 'Let\'s Create Together ',
-        carpentry_services: 'Carpentry Services',
-        installation_services: 'Installation Services',
+        title: 'Carpentry and Installation Services',
         name: {
             label: 'Name',
             placeholder: 'E.g. John Wick',
@@ -56,7 +50,7 @@ export const en = toPlainObject({
         },
         description: {
             label: 'Description',
-            placeholder: 'Please detail your request.',
+            placeholder: 'Please, detail your request.',
         },
         submit: 'Submit',
         email: {

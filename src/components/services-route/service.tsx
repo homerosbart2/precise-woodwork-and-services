@@ -5,7 +5,7 @@ require('./service.scss');
 
 interface ServiceProps {
     title: JSX.Element;
-    buttonText: JSX.Element | string;
+    buttonText: JSX.Element;
     listElements:  JSX.Element[];
     onButtonClick(): void;
 }

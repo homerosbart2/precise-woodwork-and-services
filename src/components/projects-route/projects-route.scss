@@ -25,21 +25,15 @@
         .projects-gallery-item {
             position: relative;
             height: 282px;
+            width: 100%;
+            overflow: hidden;
 
             img {
                 cursor: pointer;
                 width: 282px;
-            }
-
-            .projects-gallery-item-number {
-                position: absolute;
-                z-index: 1;
-                top: 4px;
-                right: 4px;
-                background: var(--gray-300);
-                color: white;
-                font-size: 12px;
-                padding: 2px 4px;
+                height: 100%;
+                background-size: cover;
+                transform: scale(1.01);
             }
         }
     }

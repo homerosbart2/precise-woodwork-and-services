@@ -2,7 +2,7 @@ import React from 'react';
 import { ImagePreviewer } from '../image-previewer';
 import { Service } from './service';
 import { FormattedMessage } from 'react-intl';
-import { CARPENTRY_SERVICE, INSTALLATION_SERVICE, SERVICE } from '../../types/service';
+import { SERVICE } from '../../types/service';
 
 require('./services-route.scss');
 
@@ -12,12 +12,8 @@ interface ServicesRouteProps {
 }
 
 export function ServicesRoute(props: ServicesRouteProps) {
-    const handleBuildButtonClick = () => {
-        props.onGoToContactRoute(CARPENTRY_SERVICE.KITCHEN_CABINETS);
-    }
-
-    const handleInstallButtonClick = () => {
-        props.onGoToContactRoute(INSTALLATION_SERVICE.ARTWORK);
+    const handleButtonClick = () => {
+        props.onGoToContactRoute(SERVICE.KITCHEN_CABINETS);
     }
 
     return (
@@ -27,20 +23,12 @@ export function ServicesRoute(props: ServicesRouteProps) {
             </div>
             {/* TODO: translate */}
             <Service
-                title={<FormattedMessage id="services.carpentry.title"/>}
-                buttonText="Build"
-                listElements={Object.values(CARPENTRY_SERVICE).map(service => (
-                    <FormattedMessage key={`carpentry-service-${service}`} id={`services.carpentry.${service}`}/>
+                title={<FormattedMessage id="services.title"/>}
+                buttonText={<FormattedMessage id="services.button"/>}
+                listElements={Object.values(SERVICE).map(service => (
+                    <FormattedMessage key={`instalattion-service-${service}`} id={`services.${service}`}/>
                 ))}
-                onButtonClick={handleBuildButtonClick}
-            />
-            <Service
-                title={<FormattedMessage id="services.picture_and_artwork_installation.title"/>}
-                buttonText="Install"
-                listElements={Object.values(INSTALLATION_SERVICE).map(service => (
-                    <FormattedMessage key={`instalattion-service-${service}`} id={`services.picture_and_artwork_installation.${service}`}/>
-                ))}
-                onButtonClick={handleInstallButtonClick}
+                onButtonClick={handleButtonClick}
             />
         </div>
     );

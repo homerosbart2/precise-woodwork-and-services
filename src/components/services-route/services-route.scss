@@ -3,22 +3,13 @@
 .services {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr;
     height: 100%;
     width: 100%;
 
     @include cellphone {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-template-rows: 2fr 3fr;
-    }
-
-    .services-image-previewer {
-        grid-row: span 2;
-
-        @include cellphone {
-            grid-row: span 1;
-            grid-column: span 2;
-        }
     }
 
     .services-service {
