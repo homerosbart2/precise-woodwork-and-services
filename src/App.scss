@@ -6,4 +6,21 @@
     @include cellphone {
         font-size: 12px;
     }
+
+    .app-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        background: var(--gray-300);
+        color: white;
+        display: flex;
+        justify-content: center;
+        padding: 8px 0;
+        font-size: 12px;
+
+        @include cellphone {
+            display: none;
+        }
+    }
 }

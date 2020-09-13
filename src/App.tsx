@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IntlProvider } from 'react-intl';
+import { FormattedMessage, IntlProvider } from 'react-intl';
 import { en } from './lang/en';
 import { es } from './lang/es';
 import { Navbar } from './components/navbar';
@@ -43,7 +43,7 @@ export class App extends Component<{}, AppState> {
 
         this.state = {
             fetching: true,
-            route: ROUTE.HOME,
+            route: ROUTE.ABOUT,
             locale: storedLocale ? storedLocale : 'en',
         };
     }
@@ -127,8 +127,10 @@ export class App extends Component<{}, AppState> {
                                 </ContactRoute>
                             </RouteCarouselHorse>,
                         ]}
-                        
                     </RouteCarousel>
+                    <div className="app-footer">
+                        <FormattedMessage id="footer.text"/>
+                    </div>
                 </div>
             </IntlProvider>
         );

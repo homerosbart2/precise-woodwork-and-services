@@ -250,7 +250,6 @@ class IntlContactRoute extends Component<ContactRouteProps, ContactRouteState> {
                     readOnly={true}
                     style={{ position: 'absolute', top: '-100%' }}
                 />
-                {window.navigator.userAgent}
             </div>
         );
     }

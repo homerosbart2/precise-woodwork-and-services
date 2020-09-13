@@ -55,4 +55,7 @@ export const es = toPlainObject({
             phone_number: 'Número de teléfono',
         },
     },
+    footer: {
+        text: 'Desarrollado por EConsultores · PWS © 2020 ',
+    },
 });

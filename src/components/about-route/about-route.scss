@@ -26,9 +26,17 @@
             height: 200px;
             border-radius: 50%;
             overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
 
             img {
                 width: 100%;
+            }
+
+            &.shown {
+                opacity: 1;
+                visibility: visible;
             }
         }
     }

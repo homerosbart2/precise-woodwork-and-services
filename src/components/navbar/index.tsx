@@ -64,6 +64,9 @@ export class Navbar extends Component<NavbarProps, NavbarState> {
                         {this.props.locale}
                         <img src={`/language/${this.props.locale}.png`} alt=""/>
                     </div>
+                    <div className="navbar-actions-footer">
+                        <FormattedMessage id="footer.text"/>
+                    </div>
                 </div>
                 <div className="navbar-menu" onClick={this.handleMenuClick}>
                     <FontAwesomeIcon icon={this.state.opened ? 'times' : 'bars'} />

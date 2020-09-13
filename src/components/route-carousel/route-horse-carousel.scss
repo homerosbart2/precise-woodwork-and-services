@@ -1,11 +1,19 @@
 @import '../navbar/variables';
+@import '../../styles/media-queries';
 
 .route-horse-carousel {
+    $footerHeight: 30px;
+
     display: flex;
     width: 100%;
-    height: calc(100% - #{$navbarHeight + 1px});
+    height: calc(100% - #{$navbarHeight + 1px + $footerHeight});
     position: fixed;
     left: 0;
-    bottom: 0;
+    bottom: $footerHeight;
     transition: 0.5s ease;
+
+    @include cellphone {
+        height: calc(100% - #{$navbarHeight + 1px});
+        bottom: 0;
+    }
 }

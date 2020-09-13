@@ -5,6 +5,7 @@ import {
     faTimes,
     faChevronRight,
     faChevronLeft,
+    faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -23,6 +24,7 @@ export class FontAwesomeLibrary {
             faFacebookF,
             faInstagram,
             faWhatsapp,
+            faHeart,
         );
     }
 }
