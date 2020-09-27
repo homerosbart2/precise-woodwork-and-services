@@ -21,7 +21,7 @@ export function AboutRoute(props: AboutRouteProps) {
     return (
         <div className="about">
             <div className="about-top">
-                <div className="about-top-background" style={{ backgroundImage: 'url(/about/background.jpg)' }}/>
+                <div className="about-top-background" style={{ backgroundImage: 'url(/about/background2.jpg)' }}/>
                 <div ref={imageRef} className="about-top-image">
                     <img src="/about/profile.png" alt="" onLoad={handleImageLoad}/>
                 </div>

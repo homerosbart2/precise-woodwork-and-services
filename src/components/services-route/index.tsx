@@ -19,7 +19,7 @@ export function ServicesRoute(props: ServicesRouteProps) {
     return (
         <div className="services">
             <div className="services-image-previewer">
-                <ImagePreviewer src="service-image" length={3} shown={props.shown}/>
+                <ImagePreviewer src="service-image" length={7} shown={props.shown}/>
             </div>
             {/* TODO: translate */}
             <Service

@@ -7,7 +7,7 @@ interface ProjectsRouteState {
     previewedImageIndex?: number;
 }
 
-const PROJECTS_ROUTE_IMAGES_LENGTH = 9;
+const PROJECTS_ROUTE_IMAGES_LENGTH = 11;
 
 export class ProjectsRoute extends Component<{}, ProjectsRouteState> {
     constructor(props: {}) {
